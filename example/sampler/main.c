@@ -3,6 +3,7 @@
 #include "speed_print.h"
 #include "cpucycles.h"
 
+
 int main() {
     sampler_shake256_context rng;
     sampler_context sc;
