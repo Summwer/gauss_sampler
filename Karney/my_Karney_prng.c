@@ -173,19 +173,19 @@ int main() {
     sampler_shake256_flip(&rng);
     Zf(prng_init)(&sc.p, &rng); 
 
-	int NTESTS = 500000;
-	uint64_t t[NTESTS];
-    fprintf(file,"[");
-	for (i = 0; i < NTESTS; ++i) {
-		t[i] = cpucycles();
-		ll random_number = DiscreteGaussian_Karney(&sc,0,1.7); //¦Ì, ¦Ò 
-		if(i<NTESTS - 1)
-			fprintf(file, "%lld, ", random_number);
-		else
-			fprintf(file, "%lld", random_number);
-	}	
-	fprintf(file,"]");
-	print_results("Cost of of Sampler: ", t, NTESTS);
+	clock_t start, finish;
+	int NTESTS =0 ;
+	ll random_number;
+	start = clock();
+    // fprintf(file,"[");
+	do{
+		// t[i] = cpucycles();
+		random_number = DiscreteGaussian_Karney(&sc,0,1.7); 
+		NTESTS +=1;
+		finish = clock();
+	}while((finish - start)/CLOCKS_PER_SEC < 1.);
+	// fprintf(file,"]");
+	printf("Generate %d samples in 1 seconds.",NTESTS);
 //		stop = clock();	
 //		double duration=(double)(stop-start)/CLOCKS_PER_SEC * 1000; 
 //	    printf("%lf\n",duration);

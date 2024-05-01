@@ -8,7 +8,7 @@
 
 
 #define ll long long
-double generate_uniform_random(double x) { //Éú³ÉËæ»úÊý[0, x]
+double generate_uniform_random(double x) { //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½[0, x]
 	return ((double)rand() / RAND_MAX) * x;
 }
 
@@ -114,11 +114,11 @@ ll DiscreteGaussian_Karney(double mean, double stddev) {
 	
 	double g;
 	while(1) {
-		//STEP 1 ²ÉÑùÕûÊý²¿·Ö 
+		//STEP 1 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 		k = AlgorithmG();
-		//STEP 2 Í¨¹ý¾Ü¾øµ÷ÕûÕûÊýµÄÏà¶Ô¸ÅÂÊ 
+		//STEP 2 Í¨ï¿½ï¿½ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¸ï¿½ï¿½ï¿½ 
 		if (!AlgorithmP(k * (k - 1))) continue;
-		// STEP 3 È·ÈÏ·ûºÅ
+		// STEP 3 È·ï¿½Ï·ï¿½ï¿½ï¿½
 		while(1){
 			g = generate_uniform_random(1); 
 			if(g < 0.5) s = 1, ++cnt1;
@@ -130,20 +130,20 @@ ll DiscreteGaussian_Karney(double mean, double stddev) {
 			break;
 		}
 		
-		// STEP 4 ²ÉÑùÐ¡Êý²¿·Ö 
+		// STEP 4 ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 		double di0 = stddev * k + s * mean;
 		ll i0 = ceil(di0);
 		double x0 = (i0 - di0) / stddev;
-		ll j = generate_uniform_random(ceil(stddev) - 1); // Ð¡Êý²¿·Ö 
+		ll j = generate_uniform_random(ceil(stddev) - 1); // Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 
 		// printf("%f\n", j);
 		double x = x0 + j / stddev;
 		if (!(x < 1) || (x == 0 && s < 0 && k == 0)) continue;
 
-		// STEP 5 Í¨¹ý¾Ü¾øµ÷ÕûÐ¡ÊýµÄÏà¶Ô¸ÅÂÊ 
+		// STEP 5 Í¨ï¿½ï¿½ï¿½Ü¾ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¸ï¿½ï¿½ï¿½ 
 		int h = k + 1;
 		while (h-- && AlgorithmB(k, x)) {}
 		if (!(h < 0)) continue; 
-		//STEP 6 ºÏ²¢ÕûÊýºÍÐ¡Êý²¢·µ»Ø½á¹û 
+		//STEP 6 ï¿½Ï²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø½ï¿½ï¿½ 
 		return s * (i0 + j); 
 	}
 	return 0;
@@ -151,25 +151,30 @@ ll DiscreteGaussian_Karney(double mean, double stddev) {
 int main() {
 	srand(time(NULL));
 	int i = 0, j = 0;
-	FILE *file = fopen("output.txt", "w");  //Êä³öµ½ÎÄ¼þÖÐ 
+	FILE *file = fopen("output.txt", "w");  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½ï¿½ 
 //	clock_t start, stop; 
 //	double ave = 0;
 //	for(; j < 1; j++){
 //		start = clock();
 
-	int NTESTS = 10000;
-	uint64_t t[NTESTS];
+	// int NTESTS = 10000;
+	// uint64_t t[NTESTS];
+
+	clock_t start, finish;
+	int NTESTS =0 ;
+	ll random_number;
+	start = clock();
     // fprintf(file,"[");
-	for (i = 0; i < NTESTS; ++i) {
-		t[i] = cpucycles();
-		ll random_number = DiscreteGaussian_Karney(0,1.7); //¦Ì, ¦Ò 
-		// if(i<NTESTS - 1)
-		// 	fprintf(file, "%lld, ", random_number);
-		// else
-		// 	fprintf(file, "%lld", random_number);
-	}	
-	fprintf(file,"]");
-	print_results("Cost of of Sampler: ", t, NTESTS);
+	do{
+		// t[i] = cpucycles();
+		random_number = DiscreteGaussian_Karney(0,1.7); 
+		NTESTS +=1;
+		finish = clock();
+	}while((finish - start)/CLOCKS_PER_SEC < 1.);
+	// fprintf(file,"]");
+	printf("Generate %d samples in 1 seconds.",NTESTS);
+	// print_results("Cost of of Sampler: ", t, NTESTS);
+
 //		stop = clock();	
 //		double duration=(double)(stop-start)/CLOCKS_PER_SEC * 1000; 
 //	    printf("%lf\n",duration);

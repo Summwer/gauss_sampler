@@ -2,6 +2,7 @@
 #include "sampler.h"
 #include "speed_print.h"
 #include "cpucycles.h"
+#include <time.h>
 // #include <memory_count.h>
 
 int main() {
@@ -26,19 +27,18 @@ int main() {
     mu = fpr_neg(fpr_one); //center, - 1
     // muinc = fpr_div(fpr_one, fpr_of(10)); 
 
-    int z, NTESTS = 10000;
-    uint64_t t[NTESTS];
-    // printf("[");
-    for(int i = 0; i< NTESTS; i++){
-        t[i] = cpucycles();
-        z = sampler(&sc, mu, isigma);
-        // if(i<NTESTS - 1)
-        //     printf("%d, ", z);
-        // else
-        //     printf("%d", z);
-    }
-    // printf("]\n");
-    print_results("Cost of of Sampler: ", t, NTESTS);
+    clock_t start, finish;
+    int z, NTESTS =0 ;
+	start = clock();
+    // fprintf(file,"[");
+	do{
+		// t[i] = cpucycles();
+		z = sampler(&sc, mu, isigma);
+		NTESTS +=1;
+		finish = clock();
+	}while((finish - start)/CLOCKS_PER_SEC < 1.);
+	// fprintf(file,"]");
+	printf("Generate %d samples in 1 seconds.",NTESTS);
 
     return 0;
 
