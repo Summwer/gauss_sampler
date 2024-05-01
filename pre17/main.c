@@ -26,18 +26,18 @@ int main() {
     mu = fpr_neg(fpr_one); //center
     muinc = fpr_div(fpr_one, fpr_of(10));
 
-    int z, NTESTS = 100;
+    int z, NTESTS = 10000;
     uint64_t t[NTESTS];
-    printf("[");
+    // printf("[");
     for(int i = 0; i< NTESTS; i++){
         t[i] = cpucycles();
         z = sampler(&sc, mu, isigma);
-        if(i<NTESTS - 1)
-            printf("%d, ", z);
-        else
-            printf("%d", z);
+        // if(i<NTESTS - 1)
+        //     printf("%d, ", z);
+        // else
+        //     printf("%d", z);
     }
-    printf("]\n");
+    // printf("]\n");
     print_results("Cost of of Sampler: ", t, NTESTS);
 
 
