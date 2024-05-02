@@ -5,7 +5,7 @@
 #include <math.h>
 #include "speed_print.h"
 #include "cpucycles.h"
-#include "sampler.h"
+#include "../example/sampler/sampler.h"
 
 #define ll long long
 // double generate_uniform_random(prng *p, double x) { //生成随机数[0, x]
@@ -15,7 +15,7 @@
 // }
 
 double generate_uniform_random(prng *p, double x) { //生成随机数[0, x]
-	return ((double)rand() / RAND_MAX) * x;
+	return ((double)prng_get_u8(p) / 0x100) * x;
 }
 
 
@@ -133,7 +133,6 @@ ll DiscreteGaussian_Karney(void *ctx, double mean, double stddev) {
 			if(g < 0.5) s = 1, ++cnt1;
 			else if(g > 0.5) s = -1, ++cnt2; 
 			else {
-				printf("hahahaha");
 				continue;
 			}
 			break;
@@ -143,7 +142,7 @@ ll DiscreteGaussian_Karney(void *ctx, double mean, double stddev) {
 		double di0 = stddev * k + s * mean;
 		ll i0 = ceil(di0);
 		double x0 = (i0 - di0) / stddev;
-		ll j = generate_uniform_random(&spc->p, ceil(stddev) - 1); // 小数部分 
+		ll j = generate_uniform_random(&spc->p, ceil(stddev)); // 小数部分 
 		double x = x0 + j / stddev;
 		if (!(x < 1) || (x == 0 && s < 0 && k == 0)) continue;
 
@@ -156,14 +155,14 @@ ll DiscreteGaussian_Karney(void *ctx, double mean, double stddev) {
 	}
 	return 0;
 }
-int main() {
-	srand(time(NULL));
-	int i = 0, j = 0;
-	FILE *file = fopen("output.txt", "w");  //输出到文件中 
-//	clock_t start, stop; 
-//	double ave = 0;
-//	for(; j < 1; j++){
-//		start = clock();
+
+//input: mu, sigma 
+int main(int argc, char *argv[]) {
+	double mu = atoi(argv[0]), sigma = atoi(argv[1]);
+	int i = 0, j = 0, output = atoi(argv[2]);
+	FILE *file;
+	if(output)
+		file = fopen("output.txt", "w");  //输出到文件中 
 
 	sampler_shake256_context rng;
     sampler_context sc;
@@ -176,22 +175,20 @@ int main() {
 	clock_t start, finish;
 	int NTESTS =0 ;
 	ll random_number;
+	if(output)
+    	fprintf(file,"[");
 	start = clock();
-    // fprintf(file,"[");
 	do{
-		// t[i] = cpucycles();
-		random_number = DiscreteGaussian_Karney(&sc,0,1.7); 
+		random_number = DiscreteGaussian_Karney(&sc,mu,sigma); 
 		NTESTS +=1;
 		finish = clock();
+		if(output)
+			fprintf(file, "%lld, ", random_number);
 	}while((finish - start)/CLOCKS_PER_SEC < 1.);
-	// fprintf(file,"]");
+	if(output)
+		fprintf(file,"]");
 	printf("Generate %d samples in 1 seconds.",NTESTS);
-//		stop = clock();	
-//		double duration=(double)(stop-start)/CLOCKS_PER_SEC * 1000; 
-//	    printf("%lf\n",duration);
-//	    ave += duration;
-//	}
-//	printf("%lf\n",ave/20);
+
 	return 0;
 }
 

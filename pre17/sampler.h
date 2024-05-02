@@ -205,8 +205,8 @@ static inline uint64_t
 prng_get_u64(prng *p)
 {
 	size_t u; //8 bytes, 64bit, unsigned long
-	printf("sizeof(u): %lu\n", sizeof(u));
-	printf("(sizeof p->buf.d): %lu\n",(sizeof p->buf.d));
+	// printf("sizeof(u): %lu\n", sizeof(u));
+	// printf("(sizeof p->buf.d): %lu\n",(sizeof p->buf.d));
 	/*
 	 * If there are less than 9 bytes in the buffer, we refill it.
 	 * This means that we may drop the last few bytes, but this allows

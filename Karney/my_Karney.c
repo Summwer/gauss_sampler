@@ -8,7 +8,7 @@
 
 
 #define ll long long
-double generate_uniform_random(double x) { //���������[0, x]
+double generate_uniform_random(double x) { //[0, x)
 	return ((double)rand() / RAND_MAX) * x;
 }
 
@@ -114,36 +114,42 @@ ll DiscreteGaussian_Karney(double mean, double stddev) {
 	
 	double g;
 	while(1) {
-		//STEP 1 ������������ 
+		//STEP 1 采样整数部分
 		k = AlgorithmG();
-		//STEP 2 ͨ���ܾ�������������Ը��� 
-		if (!AlgorithmP(k * (k - 1))) continue;
-		// STEP 3 ȷ�Ϸ���
+		
+		//STEP 2 通过拒绝调整整数的相对概率
+		if (!AlgorithmP(k * (k - 1))) continue; //以exp(-1/2*k*(k-1))的概率接受整数k
+
+		// printf("k = %d\n", k);
+		// STEP 3 确认符号:s (+/-)
 		while(1){
 			g = generate_uniform_random(1); 
 			if(g < 0.5) s = 1, ++cnt1;
 			else if(g > 0.5) s = -1, ++cnt2; 
 			else {
-				printf("hahahaha");
 				continue;
 			}
 			break;
 		}
 		
-		// STEP 4 ����С������ 
+		// STEP 4 采样小数部分
 		double di0 = stddev * k + s * mean;
 		ll i0 = ceil(di0);
-		double x0 = (i0 - di0) / stddev;
-		ll j = generate_uniform_random(ceil(stddev) - 1); // С������ 
+		// printf("i0 = %lld \n", i0);
+		// printf("di0= %f \n\n", stddev * k + s * mean);
+		double x0 = ((double) i0 - di0) / stddev;
+		// printf("x0 = %f\n", x0);
+		// ll j = generate_uniform_random(ceil(stddev) - 1); // 小数部分
+		ll j = generate_uniform_random(ceil(stddev)); // 小数部分
 		// printf("%f\n", j);
-		double x = x0 + j / stddev;
+		double x = x0 + (double) j / stddev;
 		if (!(x < 1) || (x == 0 && s < 0 && k == 0)) continue;
-
-		// STEP 5 ͨ���ܾ�����С������Ը��� 
+		// printf("sample: %lld\n", s * (i0 + j));
+		// STEP 5 通过拒绝调整小数的相对概率
 		int h = k + 1;
 		while (h-- && AlgorithmB(k, x)) {}
 		if (!(h < 0)) continue; 
-		//STEP 6 �ϲ�������С�������ؽ�� 
+		//STEP 6 合并整数和小数并返回结果
 		return s * (i0 + j); 
 	}
 	return 0;
@@ -167,8 +173,9 @@ int main() {
     // fprintf(file,"[");
 	do{
 		// t[i] = cpucycles();
-		random_number = DiscreteGaussian_Karney(0,1.7); 
+		random_number = DiscreteGaussian_Karney(-1.,1.7); 
 		NTESTS +=1;
+		printf("%lld,", random_number);
 		finish = clock();
 	}while((finish - start)/CLOCKS_PER_SEC < 1.);
 	// fprintf(file,"]");
