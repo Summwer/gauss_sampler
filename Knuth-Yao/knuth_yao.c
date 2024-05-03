@@ -95,114 +95,6 @@ float exponent(float x) //x必须是负数
     return residue/acc;
 }
 
-int main()
-{
-    /*
-    FILE * myfile= fopen("D:\\clion files\\untitled8\\exp_table.txt","w+");
-    for(int i=10;i<=30;i+=10)
-    {
-        fprintf(myfile,"%f      ", exp(i));
-    }
-    fprintf(myfile,"\n");
-    make_table_for_exp(myfile,1);
-    make_table_for_exp(myfile,0.1);
-    make_table_for_exp(myfile,0.01);
-    fclose(myfile);
-     */
-
-    //生成概率表P mat，然后依照这个表来进行
-
-    //从这里开始计时，让程序只跑一秒
-    clock_t start,finish;
-    start=clock();
-    float mu=-1.0;
-    float isigma=1/1.7;
-    int Pmat_row_size=17;
-    int x_values[Pmat_row_size+1];
-    float sum=0; //记录目前的概率和
-    float P_mat[Pmat_row_size+1];
-    for(int i=0;i<Pmat_row_size;i++)
-    {
-        //以mu为中心前后半分
-        int x=(i-Pmat_row_size/2)+(int)mu;
-        x_values[i]=x;
-        P_mat[i]= exponent(-(x-mu)*(x-mu)*isigma*isigma/2);
-        sum+=P_mat[i];
-    }
-
-    uint32_t *binary_p_mat;
-    binary_p_mat=(uint32_t *) malloc((Pmat_row_size+1)*sizeof (uint32_t));
-    int percision=16;
-    bool changed= make_sum_to_one(P_mat,sum,binary_p_mat,Pmat_row_size,percision);
-    //生成随机数
-    int sample_num=100000;
-    //设置种子
-    srand((unsigned int)10);
-    node * root=(node *)malloc(sizeof (node));
-    node_constructor(root);
-    //构建expansion margin
-    uint16_t max_margin_size=Pmat_row_size+1;
-    node ** expansion_margin=(node **)malloc(max_margin_size*sizeof (node *));
-    expansion_margin[0]=root;
-
-    //构建knuth yao tree
-    int Pmat_row_actual_size=Pmat_row_size;
-    if(changed) Pmat_row_actual_size++;
-    tree_constructor(expansion_margin,1,binary_p_mat,Pmat_row_actual_size,16,0x80000000);
-
-    FILE *data= fopen("data.txt","w+");
-    if(data==NULL){
-        printf("can't open the file\n");
-    }
-    float average=0;
-    float var=0;
-    int acctual_sample_num=0;
-    if(changed) {
-        for (int i = 0;; i++) {
-            uint64_t random_bits = rand();
-            random_bits <<= 32;
-            random_bits |= rand();
-            int result = knuth_yao_sampling(random_bits, root);
-            if (result == Pmat_row_size + 1) {
-                //discard
-                continue;
-            }
-            acctual_sample_num++;
-            fprintf(data, "%d,", x_values[result]);
-            //如果现在时间超过1s就停下循环
-            if (clock() - start > CLOCKS_PER_SEC) {
-                break;
-            }
-            //average+=x_values[result];
-            //var+=(x_values[result]+1.0)*(x_values[result]+1.0);
-        }
-    }
-    else{
-        for (int i = 0;; i++) {
-            uint64_t random_bits = rand();
-            random_bits <<= 32;
-            random_bits |= rand();
-            int result = knuth_yao_sampling(random_bits, root);
-            acctual_sample_num++;
-            fprintf(data, "%d\n", x_values[result]);
-            //如果现在时间超过1s就停下循环
-            if (clock() - start > CLOCKS_PER_SEC) {
-                break;
-            }
-            //average+=x_values[result];
-            //var+=(x_values[result]+1.0)*(x_values[result]+1.0);
-        }
-    }
-    //average/=(float)acctual_sample_num;
-    //var/=(float)acctual_sample_num;
-    //float sigma=sqrt(var);
-    
-    //printf("average=%f,sigma=%f\n",average,sigma);
-    fclose(data);
-    tree_destroyer(root);
-    free(expansion_margin);
-    printf("Generate %d samples in 1 seconds.\n",acctual_sample_num);
-}
 
 void make_table_for_exp(FILE *f,float step)
 {
@@ -363,4 +255,110 @@ void test_func_print_uint32(uint32_t p)
 void node_constructor(node *r){
     r->left=r->right= NULL;
     r->type=255;
+}
+
+
+int main(int argc, char *argv[])
+{   
+    int  output = atoi(argv[1]);
+    FILE *data;
+    //生成概率表P mat，然后依照这个表来进行
+
+    //从这里开始计时，让程序只跑一秒
+    clock_t start,finish;
+    start=clock();
+    float mu=-1.0, sigma = 1.7;
+    float isigma=1/1.7;
+    printf("Knuth-Yao: Sample in N(%.3f, %.3f)\n", mu, sigma);
+    int Pmat_row_size=17;
+    int x_values[Pmat_row_size+1];
+    float sum=0; //记录目前的概率和
+    float P_mat[Pmat_row_size+1];
+    for(int i=0;i<Pmat_row_size;i++)
+    {
+        //以mu为中心前后半分
+        int x=(i-Pmat_row_size/2)+(int)mu;
+        x_values[i]=x;
+        P_mat[i]= exponent(-(x-mu)*(x-mu)*isigma*isigma/2);
+        sum+=P_mat[i];
+    }
+
+    uint32_t *binary_p_mat;
+    binary_p_mat=(uint32_t *) malloc((Pmat_row_size+1)*sizeof (uint32_t));
+    int percision=16;
+    bool changed= make_sum_to_one(P_mat,sum,binary_p_mat,Pmat_row_size,percision);
+    //生成随机数
+    // int sample_num=100000;
+    //设置种子
+    srand((unsigned int)10);
+    node * root=(node *)malloc(sizeof (node));
+    node_constructor(root);
+    //构建expansion margin
+    uint16_t max_margin_size=Pmat_row_size+1;
+    node ** expansion_margin=(node **)malloc(max_margin_size*sizeof (node *));
+    expansion_margin[0]=root;
+
+    //构建knuth yao tree
+    int Pmat_row_actual_size=Pmat_row_size;
+    if(changed) Pmat_row_actual_size++;
+    tree_constructor(expansion_margin,1,binary_p_mat,Pmat_row_actual_size,16,0x80000000);
+
+    if(output){
+        data= fopen("output.txt","w+");
+        if(data==NULL){
+            printf("can't open the file\n");
+        }
+    }
+    
+    float average=0;
+    float var=0;
+    int acctual_sample_num=0;
+    if(changed) {
+        for (int i = 0;; i++) {
+            uint64_t random_bits = rand();
+            random_bits <<= 32;
+            random_bits |= rand();
+            int result = knuth_yao_sampling(random_bits, root);
+            if (result == Pmat_row_size + 1) {
+                //discard
+                continue;
+            }
+            acctual_sample_num++;
+            if(output)
+                fprintf(data, "%d ", x_values[result]);
+            //如果现在时间超过1s就停下循环
+            if (clock() - start > CLOCKS_PER_SEC) {
+                break;
+            }
+            //average+=x_values[result];
+            //var+=(x_values[result]+1.0)*(x_values[result]+1.0);
+        }
+    }
+    else{
+        for (int i = 0;; i++) {
+            uint64_t random_bits = rand();
+            random_bits <<= 32;
+            random_bits |= rand();
+            int result = knuth_yao_sampling(random_bits, root);
+            acctual_sample_num++;
+            if(output)
+                fprintf(data, "%d ", x_values[result]);
+            //如果现在时间超过1s就停下循环
+            if (clock() - start > CLOCKS_PER_SEC) {
+                break;
+            }
+            //average+=x_values[result];
+            //var+=(x_values[result]+1.0)*(x_values[result]+1.0);
+        }
+    }
+    //average/=(float)acctual_sample_num;
+    //var/=(float)acctual_sample_num;
+    //float sigma=sqrt(var);
+    
+    //printf("average=%f,sigma=%f\n",average,sigma);
+    if(output)
+        fclose(data);
+    tree_destroyer(root);
+    free(expansion_margin);
+    printf("Generate %d samples in 1 seconds.\n",acctual_sample_num);
 }

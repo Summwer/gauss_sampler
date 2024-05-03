@@ -158,11 +158,16 @@ ll DiscreteGaussian_Karney(void *ctx, double mean, double stddev) {
 
 //input: mu, sigma 
 int main(int argc, char *argv[]) {
-	double mu = atoi(argv[0]), sigma = atoi(argv[1]);
-	int i = 0, j = 0, output = atoi(argv[2]);
+	// double mu = atoi(argv[1]), sigma = atoi(argv[2]);
+	double mu = -1, sigma = 1.7;
+	printf("Karney_prng: Sample in N(%.3f, %.3f)\n", mu, sigma);
+	int i = 0, j = 0, output = atoi(argv[1]);
 	FILE *file;
 	if(output)
 		file = fopen("output.txt", "w");  //输出到文件中 
+
+	clock_t start, finish;
+	start = clock();
 
 	sampler_shake256_context rng;
     sampler_context sc;
@@ -172,22 +177,20 @@ int main(int argc, char *argv[]) {
     sampler_shake256_flip(&rng);
     Zf(prng_init)(&sc.p, &rng); 
 
-	clock_t start, finish;
+	
 	int NTESTS =0 ;
 	ll random_number;
-	if(output)
-    	fprintf(file,"[");
-	start = clock();
 	do{
 		random_number = DiscreteGaussian_Karney(&sc,mu,sigma); 
 		NTESTS +=1;
 		finish = clock();
 		if(output)
-			fprintf(file, "%lld, ", random_number);
+			fprintf(file, "%lld ", random_number);
 	}while((finish - start)/CLOCKS_PER_SEC < 1.);
+	printf("Generate %d samples in 1 seconds.\n",NTESTS);
+
 	if(output)
-		fprintf(file,"]");
-	printf("Generate %d samples in 1 seconds.",NTESTS);
+        fclose(file);
 
 	return 0;
 }

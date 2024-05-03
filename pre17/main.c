@@ -6,14 +6,16 @@
 // #include <memory_count.h>
 
 int main(int argc, char *argv[]){
-	// double mu = atoi(argv[0]), sigma = atoi(argv[1]);
-    int  output = atoi(argv[2]);
+    int  output = atoi(argv[1]);
+    FILE *file;
+    clock_t start, finish;
+	start = clock();
 
     sampler_shake256_context rng;
     sampler_context sc;
     fpr isigma , mu ; //, muinc; //= fpr_div(fpr_one, fpr_of(atoi(argv[1])));= fpr_of(atoi(argv[0]))
 
-    FILE *file;
+    
 	if(output)
 		file = fopen("output.txt", "w");  //输出到文件中 
 
@@ -32,14 +34,11 @@ int main(int argc, char *argv[]){
     mu = fpr_neg(fpr_one); //center, - 1
     // muinc = fpr_div(fpr_one, fpr_of(10)); 
 
-    clock_t start, finish;
+    printf("pre17: Sample in N(%.3f, %.3f)\n", -1., 1.7);
     int z, NTESTS =0 ;
 
 
 
-    if(output)
-    	fprintf(file,"[");
-	start = clock();
     // fprintf(file,"[");
 	do{
 		// t[i] = cpucycles();
@@ -47,11 +46,10 @@ int main(int argc, char *argv[]){
 		NTESTS +=1;
 		finish = clock();
         if(output)
-			fprintf(file, "%d, ", z);
+			fprintf(file, "%d ", z);
 	}while((finish - start)/CLOCKS_PER_SEC < 1.);
-	if(output)
-		fprintf(file,"]");
-	printf("Generate %d samples in 1 seconds.",NTESTS);
+
+	printf("Generate %d samples in 1 seconds.\n",NTESTS);
 
     return 0;
 

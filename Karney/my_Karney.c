@@ -154,18 +154,20 @@ ll DiscreteGaussian_Karney(double mean, double stddev) {
 	}
 	return 0;
 }
-int main() {
+int main(int argc, char *argv[]) {
+	double mu = atoi(argv[1]), sigma = atoi(argv[2]);
+	printf("Karney: Sample in N(%.3f, %.3f)\n", mu, sigma);
+	int i = 0, j = 0, output = atoi(argv[3]);
+	FILE *file;
+	if(output)
+		file = fopen("output.txt", "w");  //输出到文件中 
+
+	clock_t start, finish;
+	start = clock();
+
 	srand(time(NULL));
 	int i = 0, j = 0;
-	FILE *file = fopen("output.txt", "w");  //������ļ��� 
-//	clock_t start, stop; 
-//	double ave = 0;
-//	for(; j < 1; j++){
-//		start = clock();
-
-	// int NTESTS = 10000;
-	// uint64_t t[NTESTS];
-
+	
 	clock_t start, finish;
 	int NTESTS =0 ;
 	ll random_number;
@@ -175,19 +177,15 @@ int main() {
 		// t[i] = cpucycles();
 		random_number = DiscreteGaussian_Karney(-1.,1.7); 
 		NTESTS +=1;
-		printf("%lld,", random_number);
+		if(output)
+			printf("%lld ", random_number);
 		finish = clock();
 	}while((finish - start)/CLOCKS_PER_SEC < 1.);
 	// fprintf(file,"]");
-	printf("Generate %d samples in 1 seconds.",NTESTS);
-	// print_results("Cost of of Sampler: ", t, NTESTS);
+	printf("Generate %d samples in 1 seconds.\n",NTESTS);
+	if(output)
+        fclose(file);
 
-//		stop = clock();	
-//		double duration=(double)(stop-start)/CLOCKS_PER_SEC * 1000; 
-//	    printf("%lf\n",duration);
-//	    ave += duration;
-//	}
-//	printf("%lf\n",ave/20);
 	return 0;
 }
 
