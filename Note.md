@@ -1,7 +1,7 @@
 代码运行命令：
 
 ```
-gcc -o main.o main.c fpr.c rng.c sampler.c shake.c
+clang -o main.o main.c fpr.c rng.c sampler.c shake.c
 ./main.o
 ```
 

@@ -31,10 +31,10 @@ int main(int argc, char *argv[]){
     Zf(prng_init)(&sc.p, &rng); 
     sc.sigma_min = fpr_sigma_min[9];
 
-    //Here sigma = 1.7, center = -1
+    // //Here sigma = 1.7, center = -1
     isigma = fpr_div(fpr_of(10), fpr_of(17)); // isigma is equal to 1/sigma;The value of sigma MUST lie between 1 and 2 (i.e. isigma lies between * 0.5 and 1); in Falcon, sigma should always be between 1.2 and 1.9.
     mu = fpr_neg(fpr_one); //center, - 1
-
+    // isgima = fpr_one;
 
     // muinc = fpr_div(fpr_one, fpr_of(10)); 
     int z, NTESTS =0 ;

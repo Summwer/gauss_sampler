@@ -7,7 +7,6 @@
 #include "cpucycles.h"
 
 
-#define ll long long
 double generate_uniform_random(double x) { //[0, x)
 	return ((double)rand() / RAND_MAX) * x;
 }
@@ -108,10 +107,11 @@ bool AlgorithmB(int k, double x) {
 
 	return (n % 2) == 0;
 }
-int cnt1 = 0, cnt2 = 0;
-ll DiscreteGaussian_Karney(double mean, double stddev) {
+
+int DiscreteGaussian_Karney(double mean, double stddev) {
 	int k, s;
-	
+	int stdd = stddev;
+	if(stdd != stddev) ++stdd;  //stdd = ceil(stddev)
 	double g;
 	while(1) {
 		//STEP 1 采样整数部分
@@ -122,25 +122,18 @@ ll DiscreteGaussian_Karney(double mean, double stddev) {
 
 		// printf("k = %d\n", k);
 		// STEP 3 确认符号:s (+/-)
-		while(1){
-			g = generate_uniform_random(1); 
-			if(g < 0.5) s = 1, ++cnt1;
-			else if(g > 0.5) s = -1, ++cnt2; 
-			else {
-				continue;
-			}
-			break;
-		}
-		
+	        g = generate_uniform_random(1);
+		if(g < 0.5) s = 1;
+		else s = -1;
 		// STEP 4 采样小数部分
 		double di0 = stddev * k + s * mean;
-		ll i0 = ceil(di0);
+		int i0 = ceil(di0);
 		// printf("i0 = %lld \n", i0);
 		// printf("di0= %f \n\n", stddev * k + s * mean);
 		double x0 = ((double) i0 - di0) / stddev;
 		// printf("x0 = %f\n", x0);
-		// ll j = generate_uniform_random(ceil(stddev) - 1); // 小数部分
-		ll j = generate_uniform_random(ceil(stddev)); // 小数部分
+		// int j = generate_uniform_random(ceil(stddev) - 1); // 小数部分
+		int j = generate_uniform_random(ceil(stdd)); // 小数部分
 		// printf("%f\n", j);
 		double x = x0 + (double) j / stddev;
 		if (!(x < 1) || (x == 0 && s < 0 && k == 0)) continue;
@@ -155,30 +148,30 @@ ll DiscreteGaussian_Karney(double mean, double stddev) {
 	return 0;
 }
 int main(int argc, char *argv[]) {
-	double mu = atoi(argv[1]), sigma = atoi(argv[2]);
+	// double mu = -1., sigma = 1.7;
+	double mu = 0, sigma = 1024;
 	printf("Karney: Sample in N(%.3f, %.3f)\n", mu, sigma);
 	int i = 0, j = 0, output = atoi(argv[3]);
 	FILE *file;
 	if(output)
 		file = fopen("output.txt", "w");  //输出到文件中 
 
-	clock_t start, finish;
-	start = clock();
+	// clock_t start, finish;
+	// start = clock();
 
 	srand(time(NULL));
-	int i = 0, j = 0;
 	
 	clock_t start, finish;
 	int NTESTS =0 ;
-	ll random_number;
+	int random_number;
 	start = clock();
     // fprintf(file,"[");
 	do{
 		// t[i] = cpucycles();
-		random_number = DiscreteGaussian_Karney(-1.,1.7); 
+		random_number = DiscreteGaussian_Karney(mu, sigma); 
 		NTESTS +=1;
 		if(output)
-			printf("%lld ", random_number);
+			printf("%d ", random_number);
 		finish = clock();
 	}while((finish - start)/CLOCKS_PER_SEC < 1.);
 	// fprintf(file,"]");

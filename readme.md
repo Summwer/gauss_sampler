@@ -2,7 +2,7 @@
 
 ```
 cd example 
-gcc -o main.o main.c fpr.c rng.c sampler.c cpucycles.c shake.c speed_print.c 
+clang -o main.o main.c fpr.c rng.c sampler.c cpucycles.c shake.c speed_print.c 
 ./main.o
 ```
 
