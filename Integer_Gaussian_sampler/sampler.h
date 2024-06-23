@@ -30,10 +30,13 @@ int sampler_4(void *ctx, double sigma, double center);
 
 
 
+float generate_uniform_x(prng *p);
 
+bool AlgorithmB(prng *p, int k, float x);
+float generate_uniform_random(prng *p, float x);
 int DiscreteGaussian_Karney(prng *p, float mean, float stddev); 
 
-
+int Improved_Karney_for_Sampler2(prng *p); 
 
 
 

@@ -21,7 +21,7 @@ pre17_gaussian0_sampler(prng *p)
      */
     lo = prng_get_u16(p); //Generate a 16-bit random value
     u = lo & 0x3FF;  //10bit = 3FF, lo[-10:], random 10-bit number
-    
+
     /*
      * Sampled value is z, such that v is lower than the first
      * z elements of the table. [Pre17]

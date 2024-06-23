@@ -484,7 +484,7 @@ process_block(uint64_t *A)
 }
 
 
-/* see sampler.h */
+/* see inner.h */
 void
 Zf(i_shake256_init)(sampler_shake256_context *sc)
 {
@@ -497,7 +497,7 @@ Zf(i_shake256_init)(sampler_shake256_context *sc)
 	memset(sc->st.A, 0, sizeof sc->st.A);
 }
 
-/* see sampler.h */
+/* see inner.h */
 void
 Zf(i_shake256_inject)(sampler_shake256_context *sc, const uint8_t *in, size_t len)
 {

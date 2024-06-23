@@ -1,6 +1,6 @@
 #include "sampler.h"
 
-static const uint32_t dist[] = { //18 elements for all, and each element in 32*3 bit(actually 24*3bit)
+static const uint32_t dist[] = {
         10745844u,  3068844u,  3741698u,
         5559083u,  1580863u,  8248194u,
         2260429u, 13669192u,  2736639u,
@@ -21,6 +21,7 @@ static const uint32_t dist[] = { //18 elements for all, and each element in 32*3
         0u,        0u,        1u
 };
 
+
 /*
  * Sample an integer value along a half-gaussian distribution centered
  * on zero and standard deviation 1.8205, with a precision of 72 bits.
@@ -37,11 +38,11 @@ gaussian0_sampler(prng *p)
     /*
      * Get a random 72-bit value, into three 24-bit limbs v0..v2.
      */
-    lo = prng_get_u64(p); //Generate a 64-bit random value
-    hi = prng_get_u8(p); //Generate a 8-bit random value
-    v0 = (uint32_t)lo & 0xFFFFFF;  //24bit, lo[-24:]
-    v1 = (uint32_t)(lo >> 24) & 0xFFFFFF; //24bit, lo[-48:]
-    v2 = (uint32_t)(lo >> 48) | (hi << 16); //24bit, hi+log[0:16]
+    lo = prng_get_u64(p);
+    hi = prng_get_u8(p);
+    v0 = (uint32_t)lo & 0xFFFFFF;
+    v1 = (uint32_t)(lo >> 24) & 0xFFFFFF;
+    v2 = (uint32_t)(lo >> 48) | (hi << 16);
 
     /*
      * Sampled value is z, such that v0..v2 is lower than the first
@@ -51,16 +52,13 @@ gaussian0_sampler(prng *p)
     for (u = 0; u < (sizeof dist) / sizeof(dist[0]); u += 3) {
         uint32_t w0, w1, w2, cc;
 
-        //u+0 to u+2, from high bit to low bit.
-        w0 = dist[u + 2]; 
+        w0 = dist[u + 2];
         w1 = dist[u + 1];
         w2 = dist[u + 0];
-
-        //If v2v1v0<w2w1w0, then cc = 1; Else, cc = 0
-        cc = (v0 - w0) >> 31; 
+        cc = (v0 - w0) >> 31;
         cc = (v1 - w1 - cc) >> 31;
         cc = (v2 - w2 - cc) >> 31;
-        z += (int)cc; 
+        z += (int)cc;
     }
     return z;
 
@@ -205,7 +203,7 @@ sampler(void *ctx, fpr mu, fpr isigma)
          * center and standard deviation that the whole sampler
          * can be said to be constant-time.
          */
-        x = fpr_mul(fpr_sqr(fpr_sub(fpr_of(z), r)), dss); //dss = 1/(2sigma^2)
+        x = fpr_mul(fpr_sqr(fpr_sub(fpr_of(z), r)), dss);
         x = fpr_sub(x, fpr_mul(fpr_of(z0 * z0), fpr_inv_2sqrsigma0));
         if (BerExp(&spc->p, x, ccs)) {
             /*

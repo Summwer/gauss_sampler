@@ -34,7 +34,7 @@
 #include "sampler.h"
 
 
-/* see sampler.h */
+/* see inner.h */
 void
 Zf(prng_init)(prng *p, sampler_shake256_context *src)
 {
@@ -165,7 +165,7 @@ Zf(prng_refill)(prng *p)
 	p->ptr = 0;
 }
 
-/* see sampler.h */
+/* see inner.h */
 void
 Zf(prng_get_bytes)(prng *p, void *dst, size_t len)
 {

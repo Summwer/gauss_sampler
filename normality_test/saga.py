@@ -6,11 +6,10 @@ from sampler import samplerz
 from sampler_rep import samplerz_rep
 # Imports Falcon signature scheme
 from falcon import falcon
-
 # Estimators for moments
 from scipy.stats import skew, kurtosis, moment
 # Statistical (normality) tests
-from scipy.stats import chisquare
+from scipy.stats import chisquare,distributions
 # Distributions
 from scipy.stats import chi2, norm
 # Numpy stuff
@@ -182,6 +181,9 @@ class UnivariateSamples:
         exp_histogram = make_gaussian_pdt(self.exp_mu, self.exp_sigma)
         obs = list(histogram.values())
         exp = list(exp_histogram.values())
+        
+        
+        #remove 0 in list obs and remove the corresponding element in list exp.
         z = 0
         while(1):
             if (z >= len(exp) - 1):
@@ -200,6 +202,14 @@ class UnivariateSamples:
         diff = self.nsamples - sum(exp_histogram.values())
         exp_histogram[int(round(self.exp_mu))] += diff
         res = chisquare(obs, f_exp=exp)
+        print(obs)
+        print(exp)
+        print(res)
+        
+        
+        stat = sum([obs[i]**2/exp[i] for i in range(len(obs))]) - self.nsamples
+        print(stat)
+        print(distributions.chi2.sf(stat, len(obs)-1))
         return res
 
 
