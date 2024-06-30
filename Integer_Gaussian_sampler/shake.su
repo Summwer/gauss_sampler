@@ -1,0 +1,5 @@
+shake.c:59:1:process_block	738	static
+shake.c:489:1:falcon_inner_i_shake256_init	6	static
+shake.c:502:1:falcon_inner_i_shake256_inject	42	static
+shake.c:533:1:falcon_inner_i_shake256_flip	40	static
+shake.c:550:1:falcon_inner_i_shake256_extract	22	static

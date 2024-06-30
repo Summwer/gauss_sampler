@@ -1,7 +1,7 @@
 #include "sampler.h"
 #include <time.h>
 
-void test_sampler(int testNum, bool output){
+void test_sampler(int testNum, uint8_t output){
 
     //Initialize random generation. 
 	sampler_shake256_context rng;
@@ -29,6 +29,10 @@ void test_sampler(int testNum, bool output){
         // sigma = ((double)rand() / RAND_MAX);
         center = ((double)rand() / RAND_MAX); 
     } 
+
+    center = 0; //0.220;
+    // center =  0.265; 
+    printf("center = %.3f, sigma = %.3f\n", center, sigma);
 
 
 	int i = 0, j = 0;
@@ -93,9 +97,8 @@ int main() {
 	// double mu = -1, sigma = 1;
 
     // Pre-Setting: Output = 1, output the text; Else, output = 0
-    bool output = false;
-    
-    for(int testNum = 1; testNum<=4;testNum++){
+    uint8_t output = 0;
+    for(int testNum = 3; testNum<=3;testNum++){
         test_sampler(testNum, output); //this is where we start our test.
     }
 	return 0;

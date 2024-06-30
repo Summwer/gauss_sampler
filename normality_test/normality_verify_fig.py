@@ -55,7 +55,7 @@ def draw_gauss_dist(file_name):
     plt.savefig("Ver:DiscreteGaussDist(%.2f,%.2f).png" %(center, sigma))
     
    
-for testNum in range(3,5):
+for testNum in range(3,4):
     print("Normality Test for Sampler%d:" %testNum)
     draw_gauss_dist("../Integer_Gaussian_sampler/output-%d.txt" %testNum)
     # normality_test("../Knuth-Yao/output-%d.txt" %testNum)

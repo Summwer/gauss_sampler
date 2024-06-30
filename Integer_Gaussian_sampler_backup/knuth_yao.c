@@ -96,14 +96,14 @@ float Honer_algorithm(float x,float *coef,int length){
     }
     return v;
 }
-float f_exp(float x){ //直接默认x是负数
-    float iexp=0.367879450321197510;
-    float abs_x=-x;
+double f_exp(double x){ //直接默认x是负数
+    double iexp=0.367879450321197510;
+    double abs_x=-x;
     int integer_part=(int)abs_x;
-    float remaining_part=abs_x-integer_part;
+    double remaining_part=abs_x-integer_part;
 
     //制表
-    float exp_table[5];
+    double exp_table[5];
     int exp_potent[5]={1,2,4,8,16};
     exp_table[0]=iexp;
     exp_table[1]=exp_table[0]*exp_table[0];
@@ -123,15 +123,15 @@ float f_exp(float x){ //直接默认x是负数
     integer_part-=binary_index[1]*2;
     binary_index[0]=integer_part;
     //计算主要部分
-    float major=1;
+    double major=1;
     for(int i=0;i<5;i++){
         if(binary_index[i]==1)
             major*=exp_table[i];
     }
 
     //计算次要部分，由于次要部分x是小于1 的不妨计算x/2的级数展开，最后square回去
-    float X=remaining_part/2.0;
-    float root_minor=1;
+    double X=remaining_part/2.0;
+    double root_minor=1;
     /*
     root_minor+=(-X);
     root_minor+=X*X/2;
@@ -142,7 +142,7 @@ float f_exp(float x){ //直接默认x是负数
     root_minor+=X*X*X*X*X*X*X/5040;
     */
     X=remaining_part/2.0;
-    float coef[8]={1,1,1.0/2,1.0/6,1.0/24,1.0/120,1.0/720,1.0/5040};
+    double coef[8]={1,1,1.0/2,1.0/6,1.0/24,1.0/120,1.0/720,1.0/5040};
     root_minor= Honer_algorithm(-X,coef,8);
     return root_minor*root_minor*major;
 }
@@ -349,6 +349,7 @@ int knuth_yao_sampling(uint64_t random_bits, node * tree)
 
     for(uint8_t i=0;i<64;i++)
     {   
+        printf("")
         //判断走到头没有
         if(current_tree->type!=255){
             //走到头了
@@ -356,7 +357,7 @@ int knuth_yao_sampling(uint64_t random_bits, node * tree)
         }
 
         //接着走，取出bit并判断0还是1
-        if((random_bits&index)&index)
+        if(random_bits&index)
         {
             //向右走
             current_tree=current_tree->right;
@@ -367,6 +368,7 @@ int knuth_yao_sampling(uint64_t random_bits, node * tree)
         }
         //更新index
         index=index<<1;
+        // random_bits = random_bits >>1;
     }
     // return 0;
     printf("\n");

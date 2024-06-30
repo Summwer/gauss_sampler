@@ -22,6 +22,7 @@ void test_sampler(int testNum, bool output){
     if(testNum == 3 )
         // Fixed sigma = 1.5 and center c is uniformly distributed over [0,1)
         center = ((double)rand() / RAND_MAX); 
+        printf("%.30f\n",center);
         // center = 0;
     if(testNum == 4){
         // sigma is uniformly distributed over (0.8,1.6) and center is uniformly distributed over [0,1)
@@ -95,7 +96,7 @@ int main() {
     // Pre-Setting: Output = 1, output the text; Else, output = 0
     bool output = false;
     
-    for(int testNum = 1; testNum<=4;testNum++){
+    for(int testNum = 3; testNum<=3;testNum++){
         test_sampler(testNum, output); //this is where we start our test.
     }
 	return 0;
