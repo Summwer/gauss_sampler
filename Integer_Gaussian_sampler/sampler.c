@@ -107,9 +107,10 @@ int sampler_3(void *ctx, double center){
         
         
         int z1 = b + (2*b - 1) * z;
-        double x = (z1-center)*(z1-center)/2./sigma/sigma -  z*z/2./sigma/sigma;
+        double x = (z1-center+z)*(center+z-z1) * isigma15;
+        // double x = (z1-center)*(z1-center)/2./sigma/sigma -  z*z/2./sigma/sigma;
         // double prob = (double)((prng_get_u16(&spc->p)<<16)| prng_get_u16(&spc->p)) / (double) (2<<32);
-        if(generate_uniform_x(&spc->p) > f_exp(-x)) continue;
+        if(generate_uniform_x(&spc->p) > f_exp(x)) continue;
         // if(prob > exp(-x)) continue;
         return z1;
     }
@@ -144,7 +145,7 @@ int sampler_4(void *ctx, double sigma, double center){
         
         
         int z1 = b + (2*b - 1) * z;
-        double x = (z1-center)*(z1-center)/2./sigma/sigma -  z*z/2./1.6/1.6;
+        double x = (z1-center)*(z1-center)/2./sigma/sigma -  z*z*0.1953125; // 0.1953125 = 1/2./1.6/1.6
         // double prob = (double)((prng_get_u16(&spc->p)<<16)| prng_get_u16(&spc->p)) / (double) (2<<32);
         if(generate_uniform_x(&spc->p) > f_exp(-x)) continue;
         // if(prob > exp(-x)) continue;

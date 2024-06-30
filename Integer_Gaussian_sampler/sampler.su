@@ -2,4 +2,4 @@ sampler.h:81:1:prng_get_u16	8	static
 sampler.c:47:5:sampler_1	22	static
 sampler.c:71:5:sampler_2	16	static
 sampler.c:85:5:sampler_3	34	static
-sampler.c:120:5:sampler_4	36	static
+sampler.c:121:5:sampler_4	36	static

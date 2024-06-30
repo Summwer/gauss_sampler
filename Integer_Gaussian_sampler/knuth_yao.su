@@ -1,0 +1,11 @@
+knuth_yao.c:26:7:fast_log2	50	static
+knuth_yao.c:53:7:exponent	40	static
+knuth_yao.c:153:6:pre_knuthyao	129	dynamic,bounded
+knuth_yao.c:276:7:gaussian_function	20	static
+knuth_yao.c:285:6:tree_constructor	39	static
+knuth_yao.c:332:6:tree_destroyer	6	static
+knuth_yao.c:344:5:knuth_yao_sampling	53	static
+knuth_yao.c:380:10:float_to_binary	22	static
+knuth_yao.c:400:6:make_sum_to_one	28	static
+knuth_yao.c:421:6:test_func_print_uint32	14	static
+knuth_yao.c:434:6:node_constructor	6	static

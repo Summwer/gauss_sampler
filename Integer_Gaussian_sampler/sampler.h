@@ -46,6 +46,7 @@ struct node{
 //For Knuth-Yao
 #define Pmat_row_size 17
 #define max_margin_size Pmat_row_size+1
+#define isigma15 0.22222222222 //1/(2*1.5*1.5)
 
 float current_sigma;//=-928.1; //为了能初始化成功
 float current_center;//=-82.34;

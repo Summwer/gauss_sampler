@@ -1,4 +1,0 @@
-sampler.h:81:1:prng_get_u16	8	static
-Improved_Karney.c:10:7:generate_uniform_x	14	static
-Improved_Karney.c:24:5:ks_sampler	14	static
-Improved_Karney.c:42:5:Improved_Karney_for_Sampler2	24	static

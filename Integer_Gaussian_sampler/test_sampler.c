@@ -32,7 +32,7 @@ void test_sampler(int testNum, uint8_t output){
 
     center = 0; //0.220;
     // center =  0.265; 
-    printf("center = %.3f, sigma = %.3f\n", center, sigma);
+    // printf("center = %.3f, sigma = %.3f\n", center, sigma);
 
 
 	int i = 0, j = 0;
@@ -98,7 +98,7 @@ int main() {
 
     // Pre-Setting: Output = 1, output the text; Else, output = 0
     uint8_t output = 0;
-    for(int testNum = 3; testNum<=3;testNum++){
+    for(int testNum = 1; testNum<=4;testNum++){
         test_sampler(testNum, output); //this is where we start our test.
     }
 	return 0;
