@@ -20,7 +20,7 @@ def normality_test(file_name):
     res = saga.UnivariateSamples(mu, sigma, data)
     print(res)
    
-for testNum in range(1,2):
+for testNum in range(1,5):
     print("Normality Test for Sampler%d:" %testNum)
     normality_test("../Integer_Gaussian_sampler/output-%d.txt" %testNum)
     # normality_test("../Knuth-Yao/output-%d.txt" %testNum)

@@ -181,7 +181,8 @@ class UnivariateSamples:
         exp_histogram = make_gaussian_pdt(self.exp_mu, self.exp_sigma)
         obs = list(histogram.values())
         exp = list(exp_histogram.values())
-        
+        # print("exp:", exp)
+        # print("obs:", obs)
         
         #remove 0 in list obs and remove the corresponding element in list exp.
         z = 0
@@ -202,9 +203,9 @@ class UnivariateSamples:
         diff = self.nsamples - sum(exp_histogram.values())
         exp_histogram[int(round(self.exp_mu))] += diff
         res = chisquare(obs, f_exp=exp)
-        print(obs)
-        print(exp)
-        print(res)
+        # print(obs)
+        # print(exp)
+        # print(res)
         
         
         stat = sum([obs[i]**2/exp[i] for i in range(len(obs))]) - self.nsamples

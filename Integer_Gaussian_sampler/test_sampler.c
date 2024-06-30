@@ -93,13 +93,10 @@ int main() {
 	// double mu = -1, sigma = 1;
 
     // Pre-Setting: Output = 1, output the text; Else, output = 0
-    bool output = true;
-    root=(node *)malloc(sizeof (node));
-    binary_p_mat=(uint32_t *) malloc((Pmat_row_size+1)*sizeof (uint32_t));
-    expansion_margin=(node **)malloc(max_margin_size*sizeof (node *));
-    for(int testNum = 1; testNum<=1;testNum++){
-        test_sampler(testNum, output);
+    bool output = false;
+    
+    for(int testNum = 1; testNum<=4;testNum++){
+        test_sampler(testNum, output); //this is where we start our test.
     }
 	return 0;
 }
-

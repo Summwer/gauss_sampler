@@ -1,0 +1,47 @@
+    1 main: int (), <test_sampler.c 91>
+    2     test_sampler: void (int testNum, bool output), <test_sampler.c 4>
+    3         sampler_shake256_init: <>
+    4         sampler_shake256_inject: <>
+    5         sampler_shake256_flip: <>
+    6         Zf: void (i_shake256_extract) (sampler_shake256_context *sc, uint8_t *out, size_t len), <../example/sampler/shake.c 550>
+    7             sampler_shake256_extract: <>
+    8             Zf: 6
+    9             memcpy: <>
+   10             QROUND: <>
+   11             memset: <>
+   12             process_block: void (uint64_t *A), <../example/sampler/shake.c 59>
+   13         printf: <>
+   14         srand: <>
+   15         time: <>
+   16         rand: <>
+   17         fopen: <>
+   18         fprintf: <>
+   19         clock: <>
+   20         sampler_1: int (void *ctx), <sampler_knuthyao.c 89>
+   21             knuth_yao: int (float sigma, float center, void *ctx), <sampler_knuthyao.c 24>
+   22                 malloc: <>
+   23                 pre_knuthyao: bool (float mu, float sigma, node *root, int x_values[], uint32_t *binary_p_mat, node **expansion_margin), <knuth_yao.c 150>
+   24                     printf: <>
+   25                     f_exp: float (float x), <knuth_yao.c 99>
+   26                         Honik_algorithm: float (float x, float *coef, int length), <knuth_yao.c 92>
+   27                     make_sum_to_one: bool (float *p_real, float sum, uint32_t *p, uint8_t current_num, int percision), <knuth_yao.c 393>
+   28                         float_to_binary: uint32_t (float x, int percision), <knuth_yao.c 373>
+   29                     srand: <>
+   30                     node_constructor: void (node *r), <knuth_yao.c 426>
+   31                     tree_constructor: void (struct node **expansion_margin, int margin_size, uint32_t *p, int p_length, int percision, uint32_t index), <knuth_yao.c 282>
+   32                         malloc: <>
+   33                         node_constructor: 30
+   34                         tree_constructor: 31
+   35                 tree_destroyer: void (node *root), <knuth_yao.c 329>
+   36                     free: <>
+   37                     tree_destroyer: 35
+   38                 free: <>
+   39                 knuth_yao_sampling: int (uint64_t random_bits, node *tree), <knuth_yao.c 341>
+   40                     printf: <>
+   41         sampler_2: int (void *ctx), <sampler_knuthyao.c 102>
+   42             knuth_yao: 21
+   43         sampler_3: int (void *ctx, double center), <sampler_knuthyao.c 114>
+   44             knuth_yao: 21
+   45         sampler_4: int (void *ctx, double sigma, double center), <sampler_knuthyao.c 129>
+   46             knuth_yao: 21
+   47         fclose: <>
