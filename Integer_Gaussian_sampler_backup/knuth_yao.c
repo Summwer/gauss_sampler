@@ -349,7 +349,6 @@ int knuth_yao_sampling(uint64_t random_bits, node * tree)
 
     for(uint8_t i=0;i<64;i++)
     {   
-        printf("")
         //判断走到头没有
         if(current_tree->type!=255){
             //走到头了
@@ -371,7 +370,7 @@ int knuth_yao_sampling(uint64_t random_bits, node * tree)
         // random_bits = random_bits >>1;
     }
     // return 0;
-    printf("\n");
+
 }
 
 //预计输入的是一个float的概率值但是我们需要的是knuthyao算法中的那种二进制形态

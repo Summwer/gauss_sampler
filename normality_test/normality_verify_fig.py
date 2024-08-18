@@ -48,7 +48,6 @@ def draw_gauss_dist(file_name):
     
     test_xs = sorted(list(numprob_dic.keys()))
     test_probs = [numprob_dic[i] for i in test_xs]
-    
     plt.plot(test_xs, test_probs, color = "orange", label = "test_value")
     plt.plot(xs, pdt, color = "red", label = "theo_value")
     plt.legend()

@@ -1,26 +1,25 @@
 #include "sampler.h"
 
+// // //e^(-1/2*k^2)/(sum_k=0^infty e^(-1/2*k^2)): CDT
+// static const uint16_t expon_dist_13bit[] = { //5 elements for all, and each element in 16 bit (actually 15bit)
+
+// 	// 14079u, 2744u, 214u, 6u //15bits
+// 	// 3520u, 686u, 53u, 2u //13bit
+
+// 	110u, 21u, 2u , 0u//8bit
+// }; //rcdt
+
+
+
 // //e^(-1/2*k^2)/(sum_k=0^infty e^(-1/2*k^2)): CDT
-static const uint16_t expon_dist_13bit[] = { //5 elements for all, and each element in 16 bit (actually 15bit)
+// static const uint16_t expon_dist_8bit[] = { //5 elements for all, and each element in 16 bit (actually 15bit)
 
-	// 14079u, 2744u, 214u, 6u //15bits
-	// 3520u, 686u, 53u, 2u //13bit
+// 	// 14079u, 2744u, 214u, 6u //15bits
+// 	// 3520u, 686u, 53u, 2u //13bit
 
-	110u, 21u, 2u , 0u//8bit
-}; //rcdt
-
-
-
-//e^(-1/2*k^2)/(sum_k=0^infty e^(-1/2*k^2)): CDT
-static const uint16_t expon_dist_8bit[] = { //5 elements for all, and each element in 16 bit (actually 15bit)
-
-	// 14079u, 2744u, 214u, 6u //15bits
-	// 3520u, 686u, 53u, 2u //13bit
-
-	110u, 21u, 2u, 0u //8bit
-	// 220u, 43u, 3u //9bit 
-}; //rcdt
-
+// 	110u, 21u, 2u, 0u //8bit
+// 	// 220u, 43u, 3u //9bit 
+// }; //rcdt
 
 
 
@@ -31,7 +30,6 @@ static const uint16_t sampler2_rcocdt[] = {
 }; //rcdt
 
 
-
 float generate_uniform_x(prng *p){
 		
     int binary = 0x3f800000;
@@ -40,9 +38,7 @@ float generate_uniform_x(prng *p){
     tmp <<= 7;
     binary |= tmp;
 	
-
     float x = *((float*)&binary) - 1;
-
     return x;
 }
 
@@ -130,7 +126,7 @@ int ks_sampler(prng *p,int *s, int *j, float *x){
 	int tmp = prng_get_u16(p), k = 0;
 	
 	*j = tmp &0x3ff; //10bit
-	u = tmp>>10; 
+	u = tmp>>10;
 	w = sampler2_rcocdt[k]; //6bit
 	// printf("u = %d, w = %d \n", u, w);
 	while((u - w) >> 6){
@@ -138,17 +134,13 @@ int ks_sampler(prng *p,int *s, int *j, float *x){
 		u = prng_get_u8(p)>>2;
 		// printf("k = %d, u = %d, w = %d \n", k, u, w);
 	}
-
 	tmp = prng_get_u16(p);
-
 	*s = tmp & 1;
-
 	//生成随机的浮点数
 	int binary = 0x3f800000;
 	tmp = (tmp>>1)<<8;
     binary |= tmp;
     *x = *((float*)&binary) - 1;
-
 	return k;
 }
 
@@ -179,4 +171,3 @@ int Improved_Karney_for_Sampler2(prng *p) {
 	}
 	return 0;
 }
-

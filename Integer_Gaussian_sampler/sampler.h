@@ -82,7 +82,7 @@ double f_exp(double x);
 /*
  * Get an 16-bit random value from a PRNG.
  */
-static inline unsigned
+static inline uint16_t
 prng_get_u16(prng *p)
 {
 	unsigned v;
@@ -102,3 +102,54 @@ prng_get_u16(prng *p)
 
 
 
+/*
+ * Get an 32-bit random value from a PRNG.
+ */
+static inline uint32_t
+prng_get_u32(prng *p)
+{
+	unsigned v;
+
+	v = p->ptr; //After prng_init, p->ptr = 0.
+	//There is no enough value in prng p to generate a 16-bit random value.
+
+	if (v >= (sizeof p->buf.d) - 5) { //5 = 4+1, 32 bits = 4 bytes
+		Zf(prng_refill)(p);
+		v = 0;
+	}
+	p->ptr = v + 4;
+
+	return 
+		(uint32_t)p->buf.d[v + 0]
+		| ((uint32_t)p->buf.d[v + 1] << 8)
+		| ((uint32_t)p->buf.d[v + 2] << 16)
+		| ((uint32_t)p->buf.d[v + 3] << 24);
+}
+
+
+
+
+/*
+ * Get an 128-bit random value from a PRNG.
+ */
+// static inline uint16_t []
+static inline  void prng_get_u128(prng *p, int32_t value [])
+{
+	unsigned v;
+	v = p->ptr; //After prng_init, p->ptr = 0.
+	//There is no enough value in prng p to generate a 16-bit random value.
+
+	if (v >= (sizeof p->buf.d) - 17) { //33 = 32+1, 256 bits = 32 bytes
+		Zf(prng_refill)(p);
+		v = 0;
+	}
+	p->ptr = v + 16;
+	
+
+	for(int i = 0; i < 8; i++)
+		value[i] = (uint32_t)p->buf.d[v + 2*i]
+		| ((uint32_t)p->buf.d[v + 2*i+1] <<  8);
+		// | ((uint32_t)p->buf.d[v + 4*i+2] << (32*i + 16))
+		// | ((uint32_t)p->buf.d[v + 4*i+3] << (32*i + 24));
+
+}

@@ -205,13 +205,13 @@ class UnivariateSamples:
         # print(obs)
         # print(exp)
         # print(res)
-        print("exp:", exp)
-        print("obs:", obs)
+        # print("exp:", exp)
+        # print("obs:", obs)
         
         
         stat = sum([obs[i]**2/exp[i] for i in range(len(obs))]) - self.nsamples
-        print(stat)
-        print(distributions.chi2.sf(stat, len(obs)-1))
+        # print(stat)
+        # print(distributions.chi2.sf(stat, len(obs)-1))
         return res
 
 

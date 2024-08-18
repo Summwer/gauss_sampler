@@ -33,7 +33,8 @@ void test_sampler(int testNum, uint8_t output){
     } 
 
     // center = 0; //0.220;
-    // center =  0.265; 
+    // center =  0.501;
+    // sigma = 1.489 ;
     printf("center = %.3f, sigma = %.3f\n", center, sigma);
 
 
@@ -56,8 +57,6 @@ void test_sampler(int testNum, uint8_t output){
 	int NTESTS =0;
 	int random_number;
    
-    
-    
     clock_t start, finish;
 	start = clock();
     
@@ -90,14 +89,13 @@ void test_sampler(int testNum, uint8_t output){
 
 	if(output)
         fclose(file);
-
 }
 
 //input: mu, sigma 
 int main() {
 	// double mu = -1., sigma = 1.7;
 	// double mu = -1, sigma = 1;
-
+    
     // Pre-Setting: Output = 1, output the text; Else, output = 0
     uint8_t output = 0;
     for(int testNum = 1; testNum<=4;testNum++){

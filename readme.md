@@ -1,9 +1,9 @@
-运行样例：
+运行实验：
 
 ```
-cd example 
-clang -o main.o main.c fpr.c rng.c sampler.c cpucycles.c shake.c speed_print.c 
-./main.o
+cd Integer_Gaussian_sampler
+clang -o  test test_sampler.c sampler.c Improved_Karney.c  basic_compute.c ../example/sampler/rng.c ../example/sampler/shake.c -mavx -mavx2 -mfma
+./test
 ```
 
 测试代码使用内存开销
@@ -11,12 +11,7 @@ clang -o main.o main.c fpr.c rng.c sampler.c cpucycles.c shake.c speed_print.c
 
 Normality test command
 ```
-cd SAGA/code
-python 
-import saga
-mu = 0.
-sigma = 1.7
-data = [-1, -1, 1, 1, 1, -1] #the concrete data 
-res = saga.UnivariateSamples(mu, sigma, data)
-res
+cd normality_test
+python normality_test.py
+python normality_verify_fig.py #画图
 ```
