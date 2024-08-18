@@ -19,10 +19,12 @@ void test_sampler(int testNum, uint8_t output){
     double sigma = 0 , center = 0;
 
     srand((unsigned)time(NULL));
-    if(testNum == 3 )
+    if(testNum == 3 ){
         // Fixed sigma = 1.5 and center c is uniformly distributed over [0,1)
-        center = ((double)rand() / RAND_MAX); 
+        center = (rand() /(double) RAND_MAX); 
+        // printf("rand = %d, RANDMAX = %d", rand(), RAND_MAX);
         // center = 0;
+    }
     if(testNum == 4){
         // sigma is uniformly distributed over (0.8,1.6) and center is uniformly distributed over [0,1)
         sigma = ((double)rand() / RAND_MAX)*0.8 + 0.8;
@@ -30,9 +32,9 @@ void test_sampler(int testNum, uint8_t output){
         center = ((double)rand() / RAND_MAX); 
     } 
 
-    center = 0; //0.220;
+    // center = 0; //0.220;
     // center =  0.265; 
-    // printf("center = %.3f, sigma = %.3f\n", center, sigma);
+    printf("center = %.3f, sigma = %.3f\n", center, sigma);
 
 
 	int i = 0, j = 0;

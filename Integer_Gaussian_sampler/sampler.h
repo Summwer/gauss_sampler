@@ -3,6 +3,7 @@
 
 #include "../example/sampler/sampler.h"
 #include <stdio.h>
+#include <immintrin.h>
 #include <stdbool.h>
 // #include "knuth_yao.h"
 
@@ -28,7 +29,8 @@ int sampler_4(void *ctx, double sigma, double center);
 #endif
 
 double f_exp(double x); //compute e^x
-
+__m256d exp256_pd(__m256d x);
+__m256 exp256_ps(__m256 x);
 float generate_uniform_x(prng *p);
 // float generate_uniform_random(prng *p, float x);
 // int DiscreteGaussian_Karney(prng *p, float mean, float stddev); 
@@ -70,7 +72,9 @@ bool make_sum_to_one(float * p_real ,float sum,uint32_t * p,uint8_t current_num,
 
 
 float generate_uniform_random(prng *p, float x);
-int ks_sampler(prng *p,int *s);
+int ks_sampler(prng *p,int *s, int *j, float *random_float);
+// int ks_sampler(prng *p,int *s, int *j);
+
 int Improved_Karney_for_Sampler2(prng *p);
 double f_exp(double x);
 
