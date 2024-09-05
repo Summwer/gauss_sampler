@@ -97,7 +97,7 @@ int main() {
 	// double mu = -1, sigma = 1;
     
     // Pre-Setting: Output = 1, output the text; Else, output = 0
-    uint8_t output = 0;
+    uint8_t output = 1;
     for(int testNum = 1; testNum<=4;testNum++){
         test_sampler(testNum, output); //this is where we start our test.
     }
