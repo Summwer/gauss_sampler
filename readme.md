@@ -1,4 +1,4 @@
-This is a joint effort by Zhiheng Wang and Dr. Wenwen Xia.
+This is a joint effort by Dr. Wenwen Xia and Zhiheng Wang .
 
 We participated in a national cryptographic competition about generating discrete gaussians efficiently.
 
