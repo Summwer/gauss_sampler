@@ -1,4 +1,4 @@
-This is a joint effort by Dr. Wenwen Xia and Zhiheng Wang .
+This is a joint effort by Dr. Wenwen Xia and Zhiheng Wang.
 
 We participated in a national cryptographic competition about generating discrete gaussians efficiently.
 
@@ -50,3 +50,5 @@ During the competition, Zhiheng Wang implemented the Knuth-Yao algorithm to gene
 Please use the command "gcc -o knuth_yao knuth_yao.c -lm" to compile it and then use "./knuth_yao 1" to run it.
 
 Wang also implemented discrete ziggurat algorithm which can be found in the folder "./gauss_sampler/ziggurat" during the competition.
+
+During the competition, we encountered FACCT. Because we wanted to know what current methods can be used to approximate exponential functions. At the end, we were directed to GALACTICS, where an advanced algorithm pertaining to functional analysis by Sobolev $H^2$ inner product was used.
