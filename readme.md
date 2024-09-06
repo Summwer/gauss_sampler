@@ -1,7 +1,12 @@
 This is a joint effort by Zhiheng Wang and Dr. Wenwen Xia.
-We joined a cryptographic competition about generating discrete gaussians efficiently.
+
+We participated in a national cryptographic competition about generating discrete gaussians efficiently.
+
 There are four tasks which correspond to the contents in ./Integer_Gaussian_sampler/sampler.h .
-We denote the two parameters in discrete gaussians over integers to be $\sigma$ and c.
+
+For simplicity, we denote the two parameters in discrete gaussians over integers to be $\sigma$ and c.
+
+The following is a breif discription about the task.
 
 overview:
 
