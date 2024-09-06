@@ -51,4 +51,4 @@ Please use the command "gcc -o knuth_yao knuth_yao.c -lm" to compile it and then
 
 Wang also implemented discrete ziggurat algorithm which can be found in the folder "./gauss_sampler/ziggurat" during the competition.
 
-During the competition, we encountered FACCT. Because we wanted to know what current methods can be used to approximate exponential functions. At the end, we were directed to GALACTICS, where an advanced algorithm pertaining to functional analysis by Sobolev $H^2$ inner product was used.
+During the competition, we encountered FACCT. Because we wanted to know what current methods can be used to approximate exponential functions. At the end, we were directed to GALACTICS, where we found an advanced algorithm pertaining to functional analysis was used.
